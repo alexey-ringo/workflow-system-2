@@ -2165,9 +2165,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
-/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
 //
 //
 //
@@ -2234,8 +2231,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -2249,21 +2244,17 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
-      // if user is logged in via auth0
-      if (this.$auth.profile) this.$auth.logOut(); // if user is logged in via firebase
+      // If JWT login
+      if (sessionStorage.getItem('accessToken')) {
+        this.$store.dispatch('auth/logoutJWT').then(function () {
+          sessionStorage.removeItem('accessToken');
 
-      var firebaseCurrentUser = firebase_app__WEBPACK_IMPORTED_MODULE_0___default.a.auth().currentUser;
+          _this.$router.push('/pages/login');
+        })["catch"](function () {
+          sessionStorage.removeItem('accessToken');
 
-      if (firebaseCurrentUser) {
-        firebase_app__WEBPACK_IMPORTED_MODULE_0___default.a.auth().signOut().then(function () {
-          _this.$router.push('/pages/login')["catch"](function () {});
+          _this.$router.push('/pages/login');
         });
-      } // If JWT login
-
-
-      if (localStorage.getItem('accessToken')) {
-        localStorage.removeItem('accessToken');
-        this.$router.push('/pages/login')["catch"](function () {});
       } // Change role on logout. Same value as initialRole of acj.js
 
 
@@ -3358,7 +3349,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var VxTour = function VxTour() {
-  return __webpack_require__.e(/*! import() */ 90).then(__webpack_require__.bind(null, /*! @/components/VxTour.vue */ "./resources/js/src/components/VxTour.vue"));
+  return __webpack_require__.e(/*! import() */ 89).then(__webpack_require__.bind(null, /*! @/components/VxTour.vue */ "./resources/js/src/components/VxTour.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({

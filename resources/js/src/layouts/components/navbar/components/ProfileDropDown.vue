@@ -65,47 +65,39 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/auth'
 
 export default {
-  data () {
-    return {
+    data() {
+        return {}
+    },
+    computed: {
+        activeUserInfo() {
+            return this.$store.state.AppActiveUser
+        }
+    },
+    methods: {
+        logout() {
+            // If JWT login
+            if (sessionStorage.getItem('accessToken')) {
+                this.$store.dispatch('auth/logoutJWT')
+                    .then(() => {
+                        sessionStorage.removeItem('accessToken')
+                        this.$router.push('/pages/login')
+                    })
+                    .catch(() => {
+                        sessionStorage.removeItem('accessToken')
+                        this.$router.push('/pages/login')
+                    })
+            }
 
+            // Change role on logout. Same value as initialRole of acj.js
+            this.$acl.change('admin')
+            localStorage.removeItem('userInfo')
+
+            // This is just for demo Purpose. If user clicks on logout -> redirect
+            this.$router.push('/pages/login').catch(() => {
+            })
+        }
     }
-  },
-  computed: {
-    activeUserInfo () {
-      return this.$store.state.AppActiveUser
-    }
-  },
-  methods: {
-    logout () {
-
-      // if user is logged in via auth0
-      if (this.$auth.profile) this.$auth.logOut()
-
-      // if user is logged in via firebase
-      const firebaseCurrentUser = firebase.auth().currentUser
-
-      if (firebaseCurrentUser) {
-        firebase.auth().signOut().then(() => {
-          this.$router.push('/pages/login').catch(() => {})
-        })
-      }
-      // If JWT login
-      if (localStorage.getItem('accessToken')) {
-        localStorage.removeItem('accessToken')
-        this.$router.push('/pages/login').catch(() => {})
-      }
-
-      // Change role on logout. Same value as initialRole of acj.js
-      this.$acl.change('admin')
-      localStorage.removeItem('userInfo')
-
-      // This is just for demo Purpose. If user clicks on logout -> redirect
-      this.$router.push('/pages/login').catch(() => {})
-    }
-  }
 }
 </script>

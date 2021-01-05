@@ -27,14 +27,6 @@
                                   <vs-tab label="JWT">
                                     <register-jwt></register-jwt>
                                   </vs-tab>
-
-                                  <vs-tab label="Firebase">
-                                    <register-firebase></register-firebase>
-                                  </vs-tab>
-
-                                  <vs-tab label="Auth0">
-                                    <register-auth0></register-auth0>
-                                  </vs-tab>
                                 </vs-tabs>
                             </div>
                         </div>
@@ -47,14 +39,10 @@
 
 <script>
 import RegisterJwt from './RegisterJWT.vue'
-import RegisterFirebase from './RegisterFirebase.vue'
-import RegisterAuth0 from './RegisterAuth0.vue'
 
 export default {
   components: {
-    RegisterJwt,
-    RegisterFirebase,
-    RegisterAuth0
+    RegisterJwt
   }
 }
 </script>

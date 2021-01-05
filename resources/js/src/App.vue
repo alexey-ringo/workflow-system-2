@@ -76,10 +76,6 @@ export default {
 
     window.addEventListener('resize', this.handleWindowResize)
     window.addEventListener('scroll', this.handleScroll)
-
-    // Auth0
-    try       { await this.$auth.renewTokens() } catch (e) { console.error(e) }
-
   },
   destroyed () {
     window.removeEventListener('resize', this.handleWindowResize)
